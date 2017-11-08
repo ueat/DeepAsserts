@@ -1,0 +1,11 @@
+# C# / WebAPI
+packages
+bin
+obj
+*.user
+*.orig
+.vs
+
+
+TestResults/
+_ReSharper\.Caches/

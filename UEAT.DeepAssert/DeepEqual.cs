@@ -1,0 +1,122 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+
+namespace UEAT.DeepAssert
+{
+    public static class DeepEqual
+    {
+        public static void Assert<T>(T expected, T result)
+        {
+            DifferenceCollector deepDifference = new DifferenceCollector(typeof(T));
+            RecursiveAssert(typeof(T), expected, result, string.Empty, deepDifference);
+
+            deepDifference.Verify();
+        }
+
+        private static void RecursiveAssert(Type objectType, object expected, object result, string path, DifferenceCollector differenceCollector)
+        {
+            if (IsPrimitive(objectType))
+            {
+                if (expected == null || result == null)
+                {
+                    if (!(expected == null && result == null))
+                    {
+                        differenceCollector.Add(new Difference(objectType, expected, result, path));
+                    }
+                }
+                else if (!(expected.Equals(result)))
+                {
+                    differenceCollector.Add(new Difference(objectType, expected, result, path));
+                }
+
+                return;
+            }
+
+            if (expected is IList expectedList && result is IList resultList)
+            {
+                RecursiveAssert(typeof(int), expectedList.Count, resultList.Count, AddToPath(path, "Count"), differenceCollector);
+
+                var type = HeuristicallyDetermineType(expectedList);
+
+                for (int i = 0; i < expectedList.Count; ++i)
+                {
+                    RecursiveAssert(type, expectedList[i], resultList[i], path + $"[{i}]", differenceCollector);
+                }
+
+                return;
+            }
+
+            List<PropertyInfo> properties = objectType.GetProperties().Where(p => p.CanRead).ToList();
+
+            foreach (var property in properties)
+            {
+                var expectedValue = expected == null ? null : property.GetValue(expected);
+                var resultValue = result == null ? null : property.GetValue(result);
+                RecursiveAssert(property.PropertyType, expectedValue, resultValue, AddToPath(path, property.Name), differenceCollector);
+            }
+        }
+        
+        private static readonly Type[] PrimitiveTypes =
+        {
+            typeof(Boolean),
+            typeof(Byte),
+            typeof(SByte),
+            typeof(Int16),
+            typeof(UInt16),
+            typeof(Int32),
+            typeof(UInt32),
+            typeof(Int64),
+            typeof(UInt64),
+            typeof(IntPtr),
+            typeof(UIntPtr),
+            typeof(Char),
+            typeof(Double),
+            typeof(Single),
+            typeof(Enum),
+            typeof(String),
+            typeof(Decimal),
+            typeof(DateTime),
+            typeof(DateTimeOffset),
+            typeof(TimeSpan),
+            typeof(Guid)
+        };
+
+        private static bool IsPrimitive(Type type)
+        {
+            return
+                ((IList) PrimitiveTypes).Contains(type) ||
+                Convert.GetTypeCode(type) != TypeCode.Object;
+            //type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsPrimitive(type.GetGenericArguments()[0]);
+        }
+
+        private static string AddToPath(string path, string name)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return name;
+            }
+
+            return $"{path}.{name}";
+        }
+
+        private static Type HeuristicallyDetermineType(IList myList)
+        {
+            var enumerableType =
+                myList.GetType()
+                    .GetInterfaces()
+                    .Where(i => i.GenericTypeArguments.Length == 1)
+                    .FirstOrDefault(i => i.GetGenericTypeDefinition() == typeof(IEnumerable<>));
+
+            if (enumerableType != null)
+                return enumerableType.GenericTypeArguments[0];
+
+            if (myList.Count == 0)
+                return null;
+
+            return myList[0].GetType();
+        }
+    }
+}
