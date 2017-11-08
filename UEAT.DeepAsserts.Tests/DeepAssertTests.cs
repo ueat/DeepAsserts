@@ -1,9 +1,9 @@
-using UEAT.DeepAssert.Tests.TestData;
+using UEAT.DeepAsserts.Tests.TestData;
 using Xunit;
 
-namespace UEAT.DeepAssert.Tests
+namespace UEAT.DeepAsserts.Tests
 {
-    public class DeepEqualTests
+    public class DeepAssertTests
     {
         [Fact]
         public void Primitive_DontThrowIfEqual()
@@ -11,7 +11,7 @@ namespace UEAT.DeepAssert.Tests
             var expected = new IntegerData {Value = 1};
             var result = new IntegerData { Value = 1 };
 
-            DeepEqual.Assert(expected, result);
+            DeepAssert.Equals(expected, result);
         }
 
         [Fact]
@@ -20,9 +20,9 @@ namespace UEAT.DeepAssert.Tests
             var expected = new IntegerData { Value = 1 };
             var result = new IntegerData { Value = 2 };
 
-            Assert.Throws<DeepEqualException>(() =>
+            Assert.Throws<DeepAssertException>(() =>
             {
-                DeepEqual.Assert(expected, result);
+                DeepAssert.Equals(expected, result);
             });
         }
 
@@ -32,9 +32,9 @@ namespace UEAT.DeepAssert.Tests
             int? expected = 5;
             int? result = 3;
 
-            Assert.Throws<DeepEqualException>(() =>
+            Assert.Throws<DeepAssertException>(() =>
             {
-                DeepEqual.Assert(expected, result);
+                DeepAssert.Equals(expected, result);
             });
         }
 
@@ -44,7 +44,7 @@ namespace UEAT.DeepAssert.Tests
             int? expected = 5;
             int? result = 5;
 
-            DeepEqual.Assert(expected, result);
+            DeepAssert.Equals(expected, result);
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace UEAT.DeepAssert.Tests
             int? expected = null;
             int? result = null;
 
-            DeepEqual.Assert(expected, result);
+            DeepAssert.Equals(expected, result);
         }
 
         [Fact]
@@ -62,9 +62,9 @@ namespace UEAT.DeepAssert.Tests
             int? expected = null;
             int? result = 5;
 
-            Assert.Throws<DeepEqualException>(() =>
+            Assert.Throws<DeepAssertException>(() =>
             {
-                DeepEqual.Assert(expected, result);
+                DeepAssert.Equals(expected, result);
             });
         }
 
@@ -74,9 +74,9 @@ namespace UEAT.DeepAssert.Tests
             int? expected = 5;
             int? result = null;
 
-            Assert.Throws<DeepEqualException>(() =>
+            Assert.Throws<DeepAssertException>(() =>
             {
-                DeepEqual.Assert(expected, result);
+                DeepAssert.Equals(expected, result);
             });
         }
 
@@ -86,7 +86,7 @@ namespace UEAT.DeepAssert.Tests
             var expected = new SubObject { Data = new IntegerData { Value = 1 } };
             var result = new SubObject { Data = new IntegerData { Value = 1 } };
 
-            DeepEqual.Assert(expected, result);
+            DeepAssert.Equals(expected, result);
         }
 
         [Fact]
@@ -95,9 +95,9 @@ namespace UEAT.DeepAssert.Tests
             var expected = new SubObject { Data = new IntegerData { Value = 1 } };
             var result = new SubObject { Data = new IntegerData { Value = 2 } };
 
-            Assert.Throws<DeepEqualException>(() =>
+            Assert.Throws<DeepAssertException>(() =>
             {
-                DeepEqual.Assert(expected, result);
+                DeepAssert.Equals(expected, result);
             });
         }
 
@@ -107,9 +107,9 @@ namespace UEAT.DeepAssert.Tests
             var expected = new[] { 1 };
             var result   = new[] { 1, 2 };
 
-            Assert.Throws<DeepEqualException>(() =>
+            Assert.Throws<DeepAssertException>(() =>
             {
-                DeepEqual.Assert(expected, result);
+                DeepAssert.Equals(expected, result);
             });
         }
 
@@ -119,9 +119,9 @@ namespace UEAT.DeepAssert.Tests
             var expected = new[] { 1 };
             var result = new[] { 2 };
 
-            Assert.Throws<DeepEqualException>(() =>
+            Assert.Throws<DeepAssertException>(() =>
             {
-                DeepEqual.Assert(expected, result);
+                DeepAssert.Equals(expected, result);
             });
         }
 
@@ -130,7 +130,15 @@ namespace UEAT.DeepAssert.Tests
         {
             var expected = new[] { 1 };
             var result = new[] { 1 };
-            DeepEqual.Assert(expected, result);
+            DeepAssert.Equals(expected, result);
+        }
+
+        [Fact]
+        public void IgnoreAttribute_DontThrowForIgnoredProperties()
+        {
+            var expected = new IgnorePropertyData { Value = 1 };
+            var result = new IgnorePropertyData { Value = 2 };
+            DeepAssert.Equals(expected, result);
         }
     }
 }

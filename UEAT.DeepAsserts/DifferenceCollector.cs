@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UEAT.DeepAssert
+namespace UEAT.DeepAsserts
 {
     internal class DifferenceCollector
     {
@@ -33,7 +33,7 @@ namespace UEAT.DeepAssert
                 message += diff + Environment.NewLine;
             }
 
-            throw new DeepEqualException(message);
+            throw new DeepAssertException(message);
         }
     }
 }

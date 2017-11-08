@@ -4,11 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace UEAT.DeepAssert
+namespace UEAT.DeepAsserts
 {
-    public static class DeepEqual
+    /// <summary>
+    /// Compare two object with a deep equality.
+    /// </summary>
+    public static class DeepAssert
     {
-        public static void Assert<T>(T expected, T result)
+        /// <summary>
+        /// Compare an expected result with the actual result using a deep equality. 
+        /// If there is a difference, a clear diff will be thrown.
+        /// </summary>
+        /// <typeparam name="T">Type to compare</typeparam>
+        /// <param name="expected">Expected result</param>
+        /// <param name="result">Actual result</param>
+        public static void Equals<T>(T expected, T result)
         {
             DifferenceCollector deepDifference = new DifferenceCollector(typeof(T));
             RecursiveAssert(typeof(T), expected, result, string.Empty, deepDifference);
@@ -27,7 +37,7 @@ namespace UEAT.DeepAssert
                         differenceCollector.Add(new Difference(objectType, expected, result, path));
                     }
                 }
-                else if (!(expected.Equals(result)))
+                else if (!expected.Equals(result))
                 {
                     differenceCollector.Add(new Difference(objectType, expected, result, path));
                 }
@@ -49,7 +59,10 @@ namespace UEAT.DeepAssert
                 return;
             }
 
-            List<PropertyInfo> properties = objectType.GetProperties().Where(p => p.CanRead).ToList();
+            List<PropertyInfo> properties = objectType.GetProperties()
+                .Where(p => p.CanRead)
+                .Where(p => !p.GetCustomAttributes(typeof(DeepAssertIgnore), false).Any())
+                .ToList();
 
             foreach (var property in properties)
             {
@@ -89,7 +102,6 @@ namespace UEAT.DeepAssert
             return
                 ((IList) PrimitiveTypes).Contains(type) ||
                 Convert.GetTypeCode(type) != TypeCode.Object;
-            //type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsPrimitive(type.GetGenericArguments()[0]);
         }
 
         private static string AddToPath(string path, string name)

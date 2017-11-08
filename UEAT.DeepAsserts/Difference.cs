@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UEAT.DeepAssert
+namespace UEAT.DeepAsserts
 {
     internal class Difference
     {

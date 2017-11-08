@@ -1,4 +1,4 @@
-﻿namespace UEAT.DeepAssert.Tests.TestData
+﻿namespace UEAT.DeepAsserts.Tests.TestData
 {
     public class SubObject
     {
