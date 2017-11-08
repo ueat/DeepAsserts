@@ -59,7 +59,7 @@ namespace UEAT.DeepAsserts
                 return;
             }
 
-            List<PropertyInfo> properties = objectType.GetProperties()
+            List<PropertyInfo> properties = objectType.GetProperties(BindingFlags.Instance)
                 .Where(p => p.CanRead)
                 .Where(p => !p.GetCustomAttributes(typeof(DeepAssertIgnore), false).Any())
                 .ToList();

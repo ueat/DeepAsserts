@@ -140,5 +140,21 @@ namespace UEAT.DeepAsserts.Tests
             var result = new IgnorePropertyData { Value = 2 };
             DeepAssert.Equals(expected, result);
         }
+
+        [Fact]
+        public void PrivateProperties_DontThrowIfDifferent()
+        {
+            var expected = new PrivatePropertyData(1);
+            var result = new PrivatePropertyData(2);
+            DeepAssert.Equals(expected, result);
+        }
+
+        [Fact]
+        public void StaticProperties_DontThrowIfDifferent()
+        {
+            var expected = new StaticPropertyData();
+            var result = new StaticPropertyData();
+            DeepAssert.Equals(expected, result);
+        }
     }
 }
