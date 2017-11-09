@@ -156,5 +156,13 @@ namespace UEAT.DeepAsserts.Tests
             var result = new StaticPropertyData();
             DeepAssert.Equals(expected, result);
         }
+
+        [Fact]
+        public void Recursion_AreIgnored()
+        {
+            var expected = new RecursiveParentData();
+            var result = new RecursiveParentData();
+            DeepAssert.Equals(expected, result);
+        }
     }
 }

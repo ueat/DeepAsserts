@@ -6,6 +6,7 @@ namespace UEAT.DeepAsserts
 {
     internal class DifferenceCollector
     {
+        private readonly IList<object> _treated = new List<object>();
         private readonly IList<Difference> _diff = new List<Difference>();
         private readonly Type _assertType;
 
@@ -14,7 +15,20 @@ namespace UEAT.DeepAsserts
             _assertType = assertType;
         }
 
-        public void Add(Difference diff)
+        public bool TryCollect(object expected, object result)
+        {
+            if (_treated.Any(t => t == expected || t == result))
+            {
+                return false;
+            }
+
+            _treated.Add(expected);
+            _treated.Add(result);
+
+            return true;
+        }
+
+        public void AddDifference(Difference diff)
         {
             _diff.Add(diff);
         }

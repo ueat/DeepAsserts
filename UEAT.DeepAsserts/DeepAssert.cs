@@ -34,14 +34,19 @@ namespace UEAT.DeepAsserts
                 {
                     if (!(expected == null && result == null))
                     {
-                        differenceCollector.Add(new Difference(objectType, expected, result, path));
+                        differenceCollector.AddDifference(new Difference(objectType, expected, result, path));
                     }
                 }
                 else if (!expected.Equals(result))
                 {
-                    differenceCollector.Add(new Difference(objectType, expected, result, path));
+                    differenceCollector.AddDifference(new Difference(objectType, expected, result, path));
                 }
 
+                return;
+            }
+
+            if (!differenceCollector.TryCollect(expected, result))
+            {
                 return;
             }
 
@@ -59,7 +64,7 @@ namespace UEAT.DeepAsserts
                 return;
             }
 
-            List<PropertyInfo> properties = objectType.GetProperties(BindingFlags.Instance)
+            List<PropertyInfo> properties = objectType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(p => p.CanRead)
                 .Where(p => !p.GetCustomAttributes(typeof(DeepAssertIgnore), false).Any())
                 .ToList();
