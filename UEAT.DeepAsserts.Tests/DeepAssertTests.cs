@@ -83,8 +83,8 @@ namespace UEAT.DeepAsserts.Tests
         [Fact]
         public void SubObject_DontThrowIfEqual()
         {
-            var expected = new SubObject { Data = new IntegerData { Value = 1 } };
-            var result = new SubObject { Data = new IntegerData { Value = 1 } };
+            var expected = new SubObject { Data1 = new IntegerData { Value = 1 } };
+            var result = new SubObject { Data1 = new IntegerData { Value = 1 } };
 
             DeepAssert.Equals(expected, result);
         }
@@ -92,8 +92,8 @@ namespace UEAT.DeepAsserts.Tests
         [Fact]
         public void SubObject_ThrowIfDifferent()
         {
-            var expected = new SubObject { Data = new IntegerData { Value = 1 } };
-            var result = new SubObject { Data = new IntegerData { Value = 2 } };
+            var expected = new SubObject { Data1 = new IntegerData { Value = 1 }, Data2 = new IntegerData { Value = 1 } };
+            var result = new SubObject { Data1 = new IntegerData { Value = 2 }, Data2 = new IntegerData { Value = 2 } };
 
             Assert.Throws<DeepAssertException>(() =>
             {

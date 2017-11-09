@@ -2,6 +2,7 @@
 {
     public class SubObject
     {
-        public IntegerData Data { get; set; }
+        public IntegerData Data1 { get; set; }
+        public IntegerData Data2 { get; set; }
     }
 }
