@@ -12,7 +12,17 @@ namespace UEAT.DeepAsserts.Internals
 
         public override string ToString()
         {
-            return base.ToString() + Environment.NewLine + string.Join(Environment.NewLine, Children.Select(child => child.ToString()));
+            var childrenWithPrimitiveDiff = Children
+                .Where(child => child.HasPrimitiveDifference())
+                .Select(child => child.ToString())
+                .ToList();
+
+            if (!childrenWithPrimitiveDiff.Any())
+            {
+                return string.Empty;
+            }
+
+            return base.ToString() + Environment.NewLine + string.Join(Environment.NewLine, childrenWithPrimitiveDiff);
         }
     }
 }

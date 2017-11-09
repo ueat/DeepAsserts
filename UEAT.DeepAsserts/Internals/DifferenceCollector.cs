@@ -131,14 +131,16 @@ namespace UEAT.DeepAsserts.Internals
 
         private void Verify()
         {
-            if (!_rootDiff.Any(diff => diff.HasPrimitiveDifference()))
+            var diffWithPrimitives = _rootDiff.Where(diff => diff.HasPrimitiveDifference()).ToList();
+
+            if (!diffWithPrimitives.Any())
             {
                 return;
             }
 
             var message = $"{_assertType.Name} is not as expected:" + Environment.NewLine + Environment.NewLine;
 
-            foreach (var diff in _rootDiff)
+            foreach (var diff in diffWithPrimitives)
             {
                 message += diff + Environment.NewLine;
             }
