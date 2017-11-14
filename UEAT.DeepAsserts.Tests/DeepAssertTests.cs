@@ -164,5 +164,13 @@ namespace UEAT.DeepAsserts.Tests
             var result = new RecursiveParentData();
             DeepAssert.Equals(expected, result);
         }
+
+        [Fact]
+        public void Ignore_IndexedProperties()
+        {
+            var expected = new IndexedPropertyTestData();
+            var result = new IndexedPropertyTestData();
+            DeepAssert.Equals(expected, result);
+        }
     }
 }

@@ -119,6 +119,7 @@ namespace UEAT.DeepAsserts.Internals
             List<PropertyInfo> properties = objectType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(p => p.CanRead)
                 .Where(p => !p.GetCustomAttributes(typeof(DeepAssertIgnore), false).Any())
+                .Where(p => p.GetIndexParameters().Length == 0)
                 .ToList();
 
             foreach (var property in properties)
