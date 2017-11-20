@@ -102,10 +102,22 @@ namespace UEAT.DeepAsserts.Tests
         }
 
         [Fact]
-        public void List_ThrowIfDifferentLength()
+        public void List_ThrowIfExpecterShorter()
         {
             var expected = new[] { 1 };
             var result   = new[] { 1, 2 };
+
+            Assert.Throws<DeepAssertException>(() =>
+            {
+                DeepAssert.Equals(expected, result);
+            });
+        }
+
+        [Fact]
+        public void List_ThrowIfExpectedLonger()
+        {
+            var expected = new[] { 1, 2 };
+            var result = new[] { 1 };
 
             Assert.Throws<DeepAssertException>(() =>
             {

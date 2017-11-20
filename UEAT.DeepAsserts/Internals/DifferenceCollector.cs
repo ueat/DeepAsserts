@@ -107,8 +107,9 @@ namespace UEAT.DeepAsserts.Internals
             CollectPrimitive(typeof(int), expectedList.Count, resultList.Count, parent, "Count");
 
             var type = TypeHelper.GetListType(expectedList);
+            var count = Math.Min(expectedList.Count, resultList.Count);
 
-            for (int i = 0; i < expectedList.Count; ++i)
+            for (int i = 0; i < count; ++i)
             {
                 InnerCollect(type, expectedList[i], resultList[i], parent, $"[{i}]");
             }
