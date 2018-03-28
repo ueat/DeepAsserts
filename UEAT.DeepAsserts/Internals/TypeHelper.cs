@@ -37,6 +37,7 @@ namespace UEAT.DeepAsserts.Internals
         {
             return
                 ((IList)PrimitiveTypes).Contains(type) ||
+                type.GetTypeInfo().IsEnum ||
                 Convert.GetTypeCode(type) != TypeCode.Object;
         }
 

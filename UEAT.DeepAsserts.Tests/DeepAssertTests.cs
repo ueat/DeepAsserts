@@ -102,6 +102,27 @@ namespace UEAT.DeepAsserts.Tests
         }
 
         [Fact]
+        public void Enum_DontThrowIfEqual()
+        {
+            var expected = EnumData.Cat;
+            var result = EnumData.Cat;
+
+            DeepAssert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Enum_ThrowIfDifferent()
+        {
+            var expected = EnumData.Cat;
+            var result = EnumData.Unicorn;
+
+            Assert.Throws<DeepAssertException>(() =>
+            {
+                DeepAssert.Equal(expected, result);
+            });
+        }
+
+        [Fact]
         public void List_ThrowIfExpecterShorter()
         {
             var expected = new[] { 1 };
