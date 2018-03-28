@@ -8,10 +8,10 @@ namespace UEAT.DeepAsserts.Tests
         [Fact]
         public void Primitive_DontThrowIfEqual()
         {
-            var expected = new IntegerData {Value = 1};
+            var expected = new IntegerData { Value = 1};
             var result = new IntegerData { Value = 1 };
 
-            DeepAssert.Equals(expected, result);
+            DeepAssert.Equal(expected, result);
         }
 
         [Fact]
@@ -22,7 +22,7 @@ namespace UEAT.DeepAsserts.Tests
 
             Assert.Throws<DeepAssertException>(() =>
             {
-                DeepAssert.Equals(expected, result);
+                DeepAssert.Equal(expected, result);
             });
         }
 
@@ -34,7 +34,7 @@ namespace UEAT.DeepAsserts.Tests
 
             Assert.Throws<DeepAssertException>(() =>
             {
-                DeepAssert.Equals(expected, result);
+                DeepAssert.Equal(expected, result);
             });
         }
 
@@ -44,7 +44,7 @@ namespace UEAT.DeepAsserts.Tests
             int? expected = 5;
             int? result = 5;
 
-            DeepAssert.Equals(expected, result);
+            DeepAssert.Equal(expected, result);
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace UEAT.DeepAsserts.Tests
             int? expected = null;
             int? result = null;
 
-            DeepAssert.Equals(expected, result);
+            DeepAssert.Equal(expected, result);
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace UEAT.DeepAsserts.Tests
 
             Assert.Throws<DeepAssertException>(() =>
             {
-                DeepAssert.Equals(expected, result);
+                DeepAssert.Equal(expected, result);
             });
         }
 
@@ -76,7 +76,7 @@ namespace UEAT.DeepAsserts.Tests
 
             Assert.Throws<DeepAssertException>(() =>
             {
-                DeepAssert.Equals(expected, result);
+                DeepAssert.Equal(expected, result);
             });
         }
 
@@ -86,7 +86,7 @@ namespace UEAT.DeepAsserts.Tests
             var expected = new SubObject { Data1 = new IntegerData { Value = 1 } };
             var result = new SubObject { Data1 = new IntegerData { Value = 1 } };
 
-            DeepAssert.Equals(expected, result);
+            DeepAssert.Equal(expected, result);
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace UEAT.DeepAsserts.Tests
 
             Assert.Throws<DeepAssertException>(() =>
             {
-                DeepAssert.Equals(expected, result);
+                DeepAssert.Equal(expected, result);
             });
         }
 
@@ -109,7 +109,7 @@ namespace UEAT.DeepAsserts.Tests
 
             Assert.Throws<DeepAssertException>(() =>
             {
-                DeepAssert.Equals(expected, result);
+                DeepAssert.Equal(expected, result);
             });
         }
 
@@ -121,7 +121,7 @@ namespace UEAT.DeepAsserts.Tests
 
             Assert.Throws<DeepAssertException>(() =>
             {
-                DeepAssert.Equals(expected, result);
+                DeepAssert.Equal(expected, result);
             });
         }
 
@@ -133,7 +133,7 @@ namespace UEAT.DeepAsserts.Tests
 
             Assert.Throws<DeepAssertException>(() =>
             {
-                DeepAssert.Equals(expected, result);
+                DeepAssert.Equal(expected, result);
             });
         }
 
@@ -142,7 +142,7 @@ namespace UEAT.DeepAsserts.Tests
         {
             var expected = new[] { 1 };
             var result = new[] { 1 };
-            DeepAssert.Equals(expected, result);
+            DeepAssert.Equal(expected, result);
         }
 
         [Fact]
@@ -150,7 +150,7 @@ namespace UEAT.DeepAsserts.Tests
         {
             var expected = new IgnorePropertyData { Value = 1 };
             var result = new IgnorePropertyData { Value = 2 };
-            DeepAssert.Equals(expected, result);
+            DeepAssert.Equal(expected, result);
         }
 
         [Fact]
@@ -158,7 +158,7 @@ namespace UEAT.DeepAsserts.Tests
         {
             var expected = new PrivatePropertyData(1);
             var result = new PrivatePropertyData(2);
-            DeepAssert.Equals(expected, result);
+            DeepAssert.Equal(expected, result);
         }
 
         [Fact]
@@ -166,7 +166,7 @@ namespace UEAT.DeepAsserts.Tests
         {
             var expected = new StaticPropertyData();
             var result = new StaticPropertyData();
-            DeepAssert.Equals(expected, result);
+            DeepAssert.Equal(expected, result);
         }
 
         [Fact]
@@ -174,7 +174,7 @@ namespace UEAT.DeepAsserts.Tests
         {
             var expected = new RecursiveParentData();
             var result = new RecursiveParentData();
-            DeepAssert.Equals(expected, result);
+            DeepAssert.Equal(expected, result);
         }
 
         [Fact]
@@ -182,7 +182,7 @@ namespace UEAT.DeepAsserts.Tests
         {
             var expected = new IndexedPropertyTestData();
             var result = new IndexedPropertyTestData();
-            DeepAssert.Equals(expected, result);
+            DeepAssert.Equal(expected, result);
         }
     }
 }
