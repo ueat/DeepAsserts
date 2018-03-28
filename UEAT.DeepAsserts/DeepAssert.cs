@@ -19,10 +19,23 @@ namespace UEAT.DeepAsserts
         /// <typeparam name="T">Type to compare</typeparam>
         /// <param name="expected">Expected result</param>
         /// <param name="result">Actual result</param>
-        public static void Equals<T>(T expected, T result)
+        public static void Equal<T>(T expected, T result)
         {
             DifferenceCollector deepDifference = new DifferenceCollector(typeof(T));
             deepDifference.Collect(typeof(T), expected, result);
+        }
+
+        /// <summary>
+        /// Compare an expected result with the actual result using a deep equality. 
+        /// If there is a difference, a clear diff will be thrown.
+        /// </summary>
+        /// <typeparam name="T">Type to compare</typeparam>
+        /// <param name="expected">Expected result</param>
+        /// <param name="result">Actual result</param>
+        [Obsolete("Renamed to Equal")]
+        public static void Equals<T>(T expected, T result)
+        {
+            Equal(expected, result);
         }
     }
 }
