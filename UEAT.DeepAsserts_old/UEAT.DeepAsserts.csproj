@@ -1,14 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-	<PackageId>UEAT.DeepAsserts</PackageId>
-    <Version>1.3.2</Version>
+    <TargetFrameworks>netcoreapp1.1;net45</TargetFrameworks>
+    <PackageId>UEAT.DeepAsserts</PackageId>
+    <Version>1.3.1</Version>
     <Authors>UEAT - Benoit Tremblay</Authors>
     <Description>Assert a result to an expected value and provide the diff</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>First release</PackageReleaseNotes>
-    <Copyright>Copyright 2019 (c) UEAT technologies. All rights reserved.</Copyright>
+    <Copyright>Copyright 2017 (c) UEAT technologies. All rights reserved.</Copyright>
     <PackageTags>deep assert equal equality</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Product>DeepAsserts</Product>
@@ -17,6 +17,14 @@
     <PackageProjectUrl>https://github.com/UEAT/DeepAsserts</PackageProjectUrl>
     <AssemblyName>UEAT.DeepAsserts</AssemblyName>
     <RootNamespace>UEAT.DeepAsserts</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netcoreapp1.1\UEAT.DeepAsserts.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp1.1\UEAT.DeepAsserts.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>
